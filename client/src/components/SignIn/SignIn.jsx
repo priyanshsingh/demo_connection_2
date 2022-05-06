@@ -50,8 +50,9 @@ export default function BasicTextFields() {
                 }} />
                 <p className="or">OR</p>
                 <GoogleButton style={{ marginLeft: '80px' }} />
-
             </Box>
+                <br />
+                <br />
         </>
     );
 }
