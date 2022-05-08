@@ -5,14 +5,22 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import GoogleButton from 'react-google-button';
 import { useNavigate } from 'react-router-dom';
-
+import { useState } from 'react';
 
 
 export default function BasicTextFields() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('')
+
     const navigate = useNavigate();
-    const handleLogin = (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
-            navigate("/blog");
+
+        fetch('/')
+
+        navigate("/blog");
+
     }
 
     return (
@@ -36,31 +44,48 @@ export default function BasicTextFields() {
                 }}
             >
                 <Typography variant="h3" color="grey" style={{ marginTop: '10px', marginBottom: '10px' }}>Login</Typography>
-                <TextField className="text_field_email" required label="UserName" style={{ margin: '10px 0', width: '80%' }} />
+                <form method="POST">
+                    <TextField
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="text_field_email"
+                        required label="UserName"
+                        style={{ margin: '10px 0', width: '80%' }} />
 
-                <TextField
-                    className="text_field_pass"
-                    required
-                    label="Password"
-                    type="password"
-                    autoComplete="current-password"
-                    style={{ margin: '10px 0', width: '80%' }}
-                />
-                <Button type = "submit" variant="contained" size="large" onClick = {handleLogin} style={{fontSize:'1.3rem', marginTop:'10px', marginBottom:'10px'}}>
+                    <TextField
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="text_field_pass"
+                        required
+                        label="Password"
+                        type="password"
+                        autoComplete="current-password"
+                        style={{ margin: '10px 0', width: '80%' }}
+                    />
+                </form>
+                <Button type="submit"
+                    variant="contained"
+                    size="large"
+                    onClick={loginUser}
+                    style={{
+                        fontSize: '1.3rem',
+                        marginTop: '10px',
+                        marginBottom: '10px'
+                    }}>
                     Submit
                 </Button>
                 <hr style={{
-                    height: '30px', 
-                    borderStyle: 'dotted', 
-                    borderColor: '#8c8b8b', 
-                    borderWidth: '1px 0 0 0', 
+                    height: '30px',
+                    borderStyle: 'dotted',
+                    borderColor: '#8c8b8b',
+                    borderWidth: '1px 0 0 0',
                     borderRadius: '20px'
                 }} />
                 <p className="or">OR</p>
                 <GoogleButton style={{ marginLeft: '80px' }} />
             </Box>
-                <br />
-                <br />
+            <br />
+            <br />
         </>
     );
 }

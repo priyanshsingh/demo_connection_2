@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import LoginIcon from '@mui/icons-material/Login';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
+import BookIcon from '@mui/icons-material/Book';
 import { Link } from "react-router-dom";
 
 
@@ -38,14 +39,14 @@ export default function SelectedListItem() {
                 >
                     <Link to="blog">
                         <ListItemIcon>
-                            <LoginIcon />
+                            <BookIcon />
                         </ListItemIcon>
                         <ListItemText primary="BLOGS" />
                     </Link>
                 </ListItemButton>
                 <ListItemButton
-                    selected={selectedIndex === 0}
-                    onClick={(event) => handleListItemClick(event, 0)}
+                    selected={selectedIndex === 1}
+                    onClick={(event) => handleListItemClick(event, 1)}
                     style={{
                         align:'center',
                     }}
@@ -58,8 +59,8 @@ export default function SelectedListItem() {
                     </Link>
                 </ListItemButton>
                 <ListItemButton
-                    selected={selectedIndex === 1}
-                    onClick={(event) => handleListItemClick(event, 1)}
+                    selected={selectedIndex === 2}
+                    onClick={(event) => handleListItemClick(event, 2)}
                 >
                     <Link to="signup">
                         <ListItemIcon>

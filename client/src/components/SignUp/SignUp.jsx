@@ -129,8 +129,8 @@ export default function BasicTextFields() {
                     />
                 </form>
                 <br />
-                <Checkbox {...label} defaultChecked color="success" />
-                I agree the privacy policy of the company and their TNC...
+                <Checkbox {...label} defaultUnChecked color="primary" size="large" style={{marginBottom:'3px'}} />
+                I agree the company's Privacy Policy and TNC
                 <br />
                 <Button type='submit' variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }} onClick={PostData}>
                     Submit
