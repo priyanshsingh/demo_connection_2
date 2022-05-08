@@ -8,17 +8,17 @@ require('./model/user')
 const User = mongoose.model('User')
 
 app.use(express.json())
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
-app.post('/save', (req, res, next)=>{
-    const firstName = req.body.user
-    const lastName = req.body.user
+app.post('/save', async (req, res, next) => {
+    const firstName = req.body.firstName
+    const lastName = req.body.lastName
     const username = req.body.username
     const password = req.body.password
     const email = req.body.email
 
     const user = {
-        fistName: firstName,
+        firstName: firstName,
         lastName: lastName,
         username: username,
         password: password,
@@ -26,20 +26,34 @@ app.post('/save', (req, res, next)=>{
     }
 
     const userToSave = new User(user)
-    userToSave.save()
-    .then(user => {
-        console.log(`user saved is ${user}`)
-        return res.status(200).json({message: "user saved successfully"})
-    })
-    .catch(err => console.log('error occured while saving user'))
+    await userToSave.save()
+        .then(user => {
+            console.log(`user saved is ${user}`)
+            return res.status(200).json({ message: "user saved successfully" })
+        })
+        .catch(err =>{
+            console.log('error occured while saving user ', err)
+            return res.status('403').json({ message: "error occured while saving user" })
+        }
+        )
 
-    return res.status('403').json({message: "user saved successfully"})
 
     // res.status(200).json({status: "success"})
 })
 
+app.get('/', async (req, res, next)=>{
+    await User.find({})
+    .then(data => {
+        return res.status(200).json({data: data})
+    })
+    .catch(err => {
+        res.status(400).json({message: err.message})
+    })
+
+})
 
 
-app.listen(port, ()=>{
+
+app.listen(port, () => {
     console.log(`app listening on http://localhost:${port}`)
 })
