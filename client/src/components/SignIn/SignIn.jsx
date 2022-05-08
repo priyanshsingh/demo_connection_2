@@ -4,9 +4,17 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import GoogleButton from 'react-google-button';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function BasicTextFields() {
+    const navigate = useNavigate();
+    const handleLogin = (e) => {
+        e.preventDefault();
+            navigate("/blog");
+    }
+
     return (
 
         <>
@@ -38,7 +46,7 @@ export default function BasicTextFields() {
                     autoComplete="current-password"
                     style={{ margin: '10px 0', width: '80%' }}
                 />
-                <Button variant="contained" size="large" style={{fontSize:'1.3rem', marginTop:'10px', marginBottom:'10px'}}>
+                <Button type = "submit" variant="contained" size="large" onClick = {handleLogin} style={{fontSize:'1.3rem', marginTop:'10px', marginBottom:'10px'}}>
                     Submit
                 </Button>
                 <hr style={{

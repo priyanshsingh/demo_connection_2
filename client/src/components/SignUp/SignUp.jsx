@@ -51,7 +51,7 @@ export default function BasicTextFields() {
             window.alert("Registration Successful");
             console.log("Reg of User done");
 
-            navigate.push("/login");
+            navigate("/login");
         }
     }
 

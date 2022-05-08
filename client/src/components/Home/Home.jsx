@@ -36,6 +36,20 @@ export default function SelectedListItem() {
                         align:'center',
                     }}
                 >
+                    <Link to="blog">
+                        <ListItemIcon>
+                            <LoginIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="BLOGS" />
+                    </Link>
+                </ListItemButton>
+                <ListItemButton
+                    selected={selectedIndex === 0}
+                    onClick={(event) => handleListItemClick(event, 0)}
+                    style={{
+                        align:'center',
+                    }}
+                >
                     <Link to="login">
                         <ListItemIcon>
                             <LoginIcon />
