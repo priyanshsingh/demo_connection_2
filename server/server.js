@@ -10,7 +10,7 @@ const User = mongoose.model('User')
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-app.get('/save', (req, res, next)=>{
+app.post('/save', (req, res, next)=>{
     const firstName = req.body.user
     const lastName = req.body.user
     const username = req.body.username

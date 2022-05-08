@@ -26,10 +26,17 @@ export default function BasicTextFields() {
         setUser({ ...user, [name]: value });
     }
 
-    // const PostData = async (e) => {
-    //     e.preventDefault();
-    //     const{firstName, lastName, email, username, password} = user;
-    // }
+    const PostData = async (e) => {
+        e.preventDefault();
+        const{firstName, lastName, email, username, password} = user;
+
+        const res = await fetch("/save", {
+            method: "POST",
+            headers: {
+                Content-Type: "application/json";
+            }
+        })
+    }
 
     return (
 
