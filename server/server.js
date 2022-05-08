@@ -18,7 +18,9 @@ app.engine('html', require('ejs').renderFile)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
 const GOOGLE_CLIENT_SECRET = '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'
+
 app.use(session({
     secret: GOOGLE_CLIENT_SECRET,
     resave: false,
@@ -34,7 +36,6 @@ app.use(async (req, res, next) => {
 })
 
 passport.use(strategy)
-
 passport.serializeUser((user, done) => {
     done(null, user)
 })
@@ -43,26 +44,8 @@ passport.deserializeUser((user, done) => {
     done(null, user)
 })
 
-app.get('/user/login', (req, res, next) => {
-    res.render('login.ejs')
-})
+app.use(require('./routes'))
 
-app.get('/user/dashboard', (req, res, next) => {
-    // console.log(req.isAuthenticated())
-    if (req.isAuthenticated()) {
-        return res.redirect("http://localhost:3000/blog")
-    }
-    res.redirect("http://localhost:3000/signup")
-})
-
-app.get('/auth/google',
-    passport.authenticate('google', { scope: ['email', 'profile'] })
-)
-
-app.get('/auth/google/callback', passport.authenticate('google', {
-    successRedirect: '/user/dashboard',
-    failureRedirect: '/user/login'
-}))
 app.post('/save', async (req, res, next) => {
     const firstName = req.body.firstName
     const lastName = req.body.lastName
@@ -103,13 +86,6 @@ app.get('/', async (req, res, next) => {
             res.status(400).json({ message: err.message })
         })
 
-})
-
-app.post('/user/logout', (req, res, next) => {
-    const displayName = req.user.displayName
-    req.logOut()
-    res.redirect('/user/login')
-    console.log(`${displayName} is logged out`)
 })
 
 app.listen(port, () => {
