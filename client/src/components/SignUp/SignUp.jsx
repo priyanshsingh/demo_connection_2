@@ -81,17 +81,17 @@ export default function BasicTextFields() {
                     style={{ marginTop: '10px', marginBottom: '10px' }}>Register Now</Typography>
                 <form method="POST">
                     <TextField
-                        value={user.firstname}
+                        value={user.firstName}
                         onChange={handleInputs}
-                        name='firstname'
+                        name='firstName'
                         className="text_field_email"
                         required label="FirstName"
                         style={{ margin: '10px 0', width: '80%' }} />
 
                     <TextField
-                        value={user.lastname}
+                        value={user.lastName}
                         onChange={handleInputs}
-                        name='lastname'
+                        name='lastName'
                         className="text_field_email"
                         required label="LastName"
                         style={{ margin: '10px 0', width: '80%' }} />
