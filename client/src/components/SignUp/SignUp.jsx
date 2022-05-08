@@ -33,7 +33,7 @@ export default function BasicTextFields() {
         const res = await fetch("/save", {
             method: "POST",
             headers: {
-                Content-Type: "application/json";
+                "Content-Type": "application/json"
             }
         })
     }
