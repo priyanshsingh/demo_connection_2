@@ -38,7 +38,11 @@ export default function BasicTextFields() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                firstName, lastName, username, password, email
+                firstName: firstName, 
+                lastName: lastName,
+                username: username,
+                password: password,
+                email: email
             })
         });
 
