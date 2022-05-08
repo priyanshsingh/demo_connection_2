@@ -36,13 +36,9 @@ export default function BasicTextFields() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-<<<<<<< HEAD
-            }
-        })
-=======
             },
             body: JSON.stringify({
-                firstName, lastName, email, username, password
+                firstName, lastName, username, password, email
             })
         });
 
@@ -57,7 +53,6 @@ export default function BasicTextFields() {
 
             navigate.push("/login");
         }
->>>>>>> ef5e99fa57eb148676467549b0c47ba6134cfb7e
     }
 
     return (
@@ -133,7 +128,7 @@ export default function BasicTextFields() {
                 <Checkbox {...label} defaultChecked color="success" />
                 I agree the privacy policy of the company and their TNC...
                 <br />
-                <Button type='submit' variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }}>
+                <Button type='submit' variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }} onClick={PostData}>
                     Submit
                 </Button>
                 <hr style={{
