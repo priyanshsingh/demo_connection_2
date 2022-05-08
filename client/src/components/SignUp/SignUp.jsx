@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -12,6 +13,7 @@ const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 export default function BasicTextFields() {
 
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         firstName: "", lastName: "", email: "", username: "", password: ""
     })
@@ -33,9 +35,24 @@ export default function BasicTextFields() {
         const res = await fetch("/save", {
             method: "POST",
             headers: {
-                Content-Type: "application/json";
-            }
-        })
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                firstName, lastName, email, username, password
+            })
+        });
+
+        const data = await res.json();
+        if(data.status === 403 || !data){
+            window.alert("Invalid Registration");
+            console.log("Invalid Reg of User");
+        }
+        else{
+            window.alert("Registration Successful");
+            console.log("Reg of User done");
+
+            navigate.push("/login");
+        }
     }
 
     return (
@@ -111,7 +128,7 @@ export default function BasicTextFields() {
                 <Checkbox {...label} defaultChecked color="success" />
                 I agree the privacy policy of the company
                 <br />
-                <Button variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }}>
+                <Button type='submit' variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }}>
                     Submit
                 </Button>
                 <hr style={{
