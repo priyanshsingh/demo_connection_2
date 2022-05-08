@@ -28,26 +28,35 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(async (req, res, next) => {
+    console.log(`req is ${req} and body is ${req.body}`)
+    next()
+})
+
 passport.use(strategy)
 
-passport.serializeUser((user, done)=>{
+passport.serializeUser((user, done) => {
     done(null, user)
 })
 
-passport.deserializeUser((user, done)=>{
+passport.deserializeUser((user, done) => {
     done(null, user)
 })
 
-app.get('/user/login', (req, res, next)=>{
+app.get('/user/login', (req, res, next) => {
     res.render('login.ejs')
 })
 
-app.get('/user/dashboard', (req, res, next)=>{
-    res.render('dashboard.ejs', {name: req.user.displayName || 'jatin'})
+app.get('/user/dashboard', (req, res, next) => {
+    // console.log(req.isAuthenticated())
+    if (req.isAuthenticated()) {
+        return res.redirect("http://localhost:3000/blog")
+    }
+    res.redirect("http://localhost:3000/signup")
 })
 
-app.get('/auth/google', 
-    passport.authenticate('google', {scope: ['email', 'profile']})
+app.get('/auth/google',
+    passport.authenticate('google', { scope: ['email', 'profile'] })
 )
 
 app.get('/auth/google/callback', passport.authenticate('google', {
@@ -75,7 +84,7 @@ app.post('/save', async (req, res, next) => {
             console.log(`user saved is ${user}`)
             return res.status(200).json({ message: "user saved successfully" })
         })
-        .catch(err =>{
+        .catch(err => {
             console.log('error occured while saving user ', err)
             return res.status('403').json({ message: "error occured while saving user" })
         }
@@ -85,18 +94,18 @@ app.post('/save', async (req, res, next) => {
     // res.status(200).json({status: "success"})
 })
 
-app.get('/', async (req, res, next)=>{
+app.get('/', async (req, res, next) => {
     await User.find({})
-    .then(data => {
-        return res.status(200).json({data: data})
-    })
-    .catch(err => {
-        res.status(400).json({message: err.message})
-    })
+        .then(data => {
+            return res.status(200).json({ data: data })
+        })
+        .catch(err => {
+            res.status(400).json({ message: err.message })
+        })
 
 })
 
-app.post('/user/logout', (req, res, next)=>{
+app.post('/user/logout', (req, res, next) => {
     const displayName = req.user.displayName
     req.logOut()
     res.redirect('/user/login')
