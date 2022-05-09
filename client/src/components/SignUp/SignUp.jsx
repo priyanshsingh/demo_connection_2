@@ -30,7 +30,7 @@ export default function BasicTextFields() {
 
     const PostData = async (e) => {
         e.preventDefault();
-        const{firstName, lastName, email, username, password} = user;
+        const { firstName, lastName, email, username, password } = user;
 
         const res = await fetch("/save", {
             method: "POST",
@@ -38,7 +38,7 @@ export default function BasicTextFields() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                firstName: firstName, 
+                firstName: firstName,
                 lastName: lastName,
                 username: username,
                 password: password,
@@ -47,11 +47,11 @@ export default function BasicTextFields() {
         });
 
         const data = await res.json();
-        if(data.status === 403 || !data){
+        if (data.status === 403 || !data) {
             window.alert("Invalid Registration");
             console.log("Invalid Reg of User");
         }
-        else{
+        else {
             window.alert("Registration Successful");
             console.log("Reg of User done");
 
@@ -129,7 +129,7 @@ export default function BasicTextFields() {
                     />
                 </form>
                 <br />
-                <Checkbox {...label} defaultUnChecked color="primary" size="large" style={{marginBottom:'3px'}} />
+                <Checkbox {...label} defaultUnChecked color="primary" size="large" style={{ marginBottom: '3px' }} />
                 I agree the company's Privacy Policy and TNC
                 <br />
                 <Button type='submit' variant="contained" size="large" style={{ fontSize: '1.3rem', marginTop: '10px', marginBottom: '10px' }} onClick={PostData}>
@@ -143,7 +143,10 @@ export default function BasicTextFields() {
                     borderRadius: '20px'
                 }} />
                 <p className="or">OR</p>
-                <GoogleButton style={{ marginLeft: '80px' }} />
+
+                <a href="http://localhost:4000/auth/google">
+                    <GoogleButton style={{ marginLeft: '80px' }} />
+                </a>
             </Box>
             <br />
             <br />

@@ -82,7 +82,9 @@ export default function BasicTextFields() {
                     borderRadius: '20px'
                 }} />
                 <p className="or">OR</p>
-                <GoogleButton style={{ marginLeft: '80px' }} />
+                <a href="http://localhost:4000/auth/google">
+                    <GoogleButton style={{ marginLeft: '80px' }} />
+                </a>
             </Box>
             <br />
             <br />
