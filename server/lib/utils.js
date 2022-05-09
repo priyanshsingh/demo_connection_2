@@ -15,7 +15,6 @@ const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf-8')
 
 
 function validateLogin(req, res, next) {
-
     try{
         const tokenParts = req.headers.authorization.split(' ');
         if (tokenParts[0] === "Bearer" && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
@@ -41,22 +40,12 @@ function validateLogin(req, res, next) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 function validPassword(password, hash, salt) {
     const hashVerify = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
     return hash === hashVerify;
 }
+
+
 
 function genPassword(password) {
     const salt = crypto.randomBytes(32).toString('hex');
