@@ -8,12 +8,6 @@ const pathToPubKey = path.join(__dirname, '..', 'id_rsa_pub.pem')
 const PRIV_KEY = fs.readFileSync(pathToPrivKey, 'utf-8')
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf-8')
 
-
-
-
-
-
-
 function validateLogin(req, res, next) {
     try{
         const tokenParts = req.headers.authorization.split(' ');

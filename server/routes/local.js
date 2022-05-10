@@ -29,10 +29,20 @@ router.post('/register', async(req, res, next)=>{
     const username= req.body.username
     const email = req.body.email
     const password = req.body.password
+    const blogs = req.body.blogs
 
     const saltHash = utils.genPassword(password);
     const salt = saltHash.salt;
     const hash = saltHash.hash
+
+
+    User.find({username: username})
+    .then(data => {
+        console.log(`data is ${data.username} username is ${username}`)
+        if(data.username === username){
+            return res.status(403).json({status: 403, message: "username already exist"})
+        }
+    })
 
     const newUser = new User({
         firstName: firstName,
@@ -40,15 +50,36 @@ router.post('/register', async(req, res, next)=>{
         username: username,
         email: email,
         salt: salt,
-        hash: hash
+        hash: hash,
+        blogs: blogs,
     })
 
     await newUser.save()
     .then((user)=>{
-        const jwt = utils.isssueJWT(user)
-        res.json({success: true, user: user, token: jwt.token, expiresIn: jwt.expiresIn})
+        // res.json({success: true, user: user, token: jwt.token, expiresIn: jwt.expiresIn})
+        return res.status(200).json({status: "success", message: "user is saved"})
     })
-    .catch(err => next(err))
+    .catch(err => {
+        console.log(err.message)
+        res.status(403).json({status: "403", message:"unable to register"})
+    })
 });
+
+router.patch('/addBlog', async (req, res, next)=>{
+    const blog = req.body.blog
+    const id = req.body.id
+    await User.updateOne({ _id: id },
+        {
+            $push : {
+                blogs: blog
+            }
+        })
+        .then(data=>{
+            return res.send(data)
+        })
+        .catch(err=>{
+            console.log("err is ", err.message)
+        })
+})
 
 module.exports = router;

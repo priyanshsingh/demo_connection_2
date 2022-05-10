@@ -31,7 +31,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(async (req, res, next) => {
-    console.log(`req is ${req} and body is ${req.body}`)
+    console.log(`username is ${req.body.username}`)
     next()
 })
 
@@ -44,7 +44,30 @@ passport.deserializeUser((user, done) => {
     done(null, user)
 })
 
+let count = 1
+showLogs = (req, res, next)=>{
+    console.log("\n==============================")
+    console.log(`------------>  ${count++}`)
+
+    console.log(`\n req.session.passport -------> `)
+    console.log(req.session.passport)
+  
+    console.log(`\n req.user -------> `) 
+    console.log(req.user) 
+  
+    console.log("\n Session and Cookie")
+    console.log(`req.session.id -------> ${req.session.id}`) 
+    console.log(`req.session.cookie -------> `) 
+    console.log(req.session.cookie) 
+  
+    console.log("===========================================\n")
+
+    next()
+}
+app.use(showLogs)
+
 app.use(require('./routes'))
+
 
 app.post('/save', async (req, res, next) => {
     const firstName = req.body.firstName
@@ -73,10 +96,9 @@ app.post('/save', async (req, res, next) => {
         }
         )
 
-
-    // res.status(200).json({status: "success"})
 })
 
+/*
 app.get('/', async (req, res, next) => {
     await User.find({})
         .then(data => {
@@ -87,6 +109,7 @@ app.get('/', async (req, res, next) => {
         })
 
 })
+*/
 
 app.listen(port, () => {
     console.log(`app listening on http://localhost:${port}`)
