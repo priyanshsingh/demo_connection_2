@@ -9,7 +9,7 @@ const PRIV_KEY = fs.readFileSync(pathToPrivKey, 'utf-8')
 const PUB_KEY = fs.readFileSync(pathToPubKey, 'utf-8')
 
 function validateLogin(req, res, next) {
-    try{
+    try {
         const tokenParts = req.headers.authorization.split(' ');
         if (tokenParts[0] === "Bearer" && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
             try {
@@ -28,7 +28,7 @@ function validateLogin(req, res, next) {
             next()
         }
     }
-    catch(err){
+    catch (err) {
         next()
     }
 }
@@ -70,21 +70,28 @@ function isssueJWT(user) {
 }
 
 function authMiddleware(req, res, next) {
-    const tokenParts = req.headers.authorization.split(' ');
-    if (tokenParts[0] === "Bearer" && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
-        try {
-            const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
-                algorithms: ['RS256']
-            })
-            console.log('verification is ', verification)
-            req.jwt = verification;
-            next();
-        } catch (error) {
-            console.log('error occured', error.message)
+    console.log(`is authenticated value is ${req.isAuthenticated()}`)
+    if (req.headers.authorization != null) {
+        const tokenParts = req.headers.authorization.split(' ');
+        if (tokenParts[0] === "Bearer" && tokenParts[1].match(/\S+\.\S+\.\S+/) !== null) {
+            try {
+                const verification = jsonwebtoken.verify(tokenParts[1], PUB_KEY, {
+                    algorithms: ['RS256']
+                })
+                console.log('verification is ', verification)
+                req.jwt = verification;
+                next();
+            } catch (error) {
+                console.log('error occured', error.message)
+                return res.status(401).json({ success: false, msg: "you are not authorized to visit this route" });
+            }
+        } else {
             return res.status(401).json({ success: false, msg: "you are not authorized to visit this route" });
         }
-    } else {
+    }else if(req.isAuthenticated() === null || !req.isAuthenticated()){
         return res.status(401).json({ success: false, msg: "you are not authorized to visit this route" });
+    }else{
+        next();
     }
 }
 
